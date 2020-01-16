@@ -1,0 +1,13 @@
+name: aqi-archiver
+
+channels:
+  - conda-forge
+dependencies:
+  - python=3.6
+  - pylint
+  - pytest
+  - apscheduler
+  - rasterio
+  - rioxarray
+  - xarray
+  - boto3
