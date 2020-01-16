@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run hellej/hope-aqi-archiver:latest
+docker run -it hellej/hope-aqi-archiver:latest
