@@ -3,3 +3,5 @@ credentials.csv
 src/aqi_cache/*
 src/aqi_archiver.log
 src/.DS_Store
+src/.env
+src/.vscode/settings.json
