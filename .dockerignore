@@ -1,3 +1,4 @@
 .git
 */.env
 */allPollutants*
+*/.aqi_archiver.log
