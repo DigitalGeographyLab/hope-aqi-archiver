@@ -1,0 +1,5 @@
+.git
+*/.env
+*/.vscode
+*/allPollutants*
+*/aqi_archiver.log
