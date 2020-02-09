@@ -31,7 +31,7 @@ class AqiUploader:
             aws_secret_access_key=self.aws_secret_access_key,
             endpoint_url=self.aws_endpoint
             )
-        s3_allas.upload_file(self.aqi_dir +'/'+ aqi_zip_name, 'hope-enfuser-archive', aqi_zip_name)
+        s3_allas.upload_file(self.aqi_dir +'/'+ aqi_zip_name, self.bucket_name, aqi_zip_name)
         self.latest_aqi_upload = aqi_zip_name
         self.log.info('upload done')
 
