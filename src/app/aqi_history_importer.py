@@ -37,14 +37,13 @@ class AqiHistoryImporter:
         uploaded = self.uploader.get_uploaded_files_list()
         self.log.info('already uploaded count: '+ str(len([to_fetch for to_fetch in self.to_fetch if to_fetch in uploaded])))
         self.to_fetch = [to_fetch for to_fetch in self.to_fetch if to_fetch not in uploaded]
-        self.log.info('to import count: '+ str(len(self.to_fetch)))
 
         # filter out unavailable files
         if (len(self.to_fetch) > 0):
             available = self.fetcher.get_available_files_list()
-            self.to_fetch = [to_fetch for to_fetch in self.to_fetch if to_fetch in available]
-            self.log.info('available to import count: '+ str(len(self.to_fetch)))
+            self.log.info('available to import count: '+ str(len([to_fetch for to_fetch in self.to_fetch if to_fetch in available])))
             self.log.info('unavailable to import count: '+str(len([to_fetch for to_fetch in self.to_fetch if to_fetch not in available])))
+            self.to_fetch = [to_fetch for to_fetch in self.to_fetch if to_fetch in available]
 
     def fetch_upload(self) -> None:
         for aqi_file in self.to_fetch:
