@@ -4,11 +4,15 @@ from app.logger import Logger
 from app.env_vars import set_env_vars
 from app.aqi_fetcher import AqiFetcher
 from app.aqi_uploader import AqiUploader
+from app.aqi_history_importer import AqiHistoryImporter
 
 log = Logger(b_printing=True, log_file='aqi_archiver.log')
 set_env_vars(log)
 fetcher = AqiFetcher(log)
 uploader = AqiUploader(log)
+history_importer = AqiHistoryImporter(log, fetcher, uploader)
+if (history_importer.enabled == True):
+    history_importer.import_aqi_history()
 
 def download_new_aqi_data():
     expected_aqi_zip_name = fetcher.get_expected_aqi_download_name()
@@ -34,5 +38,4 @@ while True:
         download_new_aqi_data()
     if (uploader.latest_aqi_upload != fetcher.latest_aqi_download):
         upload_new_aqi_data()
-
     time.sleep(10)

@@ -57,7 +57,7 @@ class AqiFetcher:
         Returns:
             The name of the downloaded zip file (e.g. allPollutants_2019-11-08T14.zip).
         """
-        self.log.info('fetching AQI data...')
+        self.log.info('fetching '+ aqi_zip_name +'...')
         # connect to S3
         s3 = boto3.client('s3',
                         region_name=self.s3_region,
@@ -68,5 +68,22 @@ class AqiFetcher:
         # download the netcdf file to a specified location
         file_out = self.aqi_dir + '/' + aqi_zip_name
         s3.download_file(self.s3_bucketname, self.s3_enfuser_data_folder + aqi_zip_name, file_out)
-        self.log.info('fetched aqi_zip: '+ aqi_zip_name)
+        self.log.info('fetch done')
         self.latest_aqi_download = aqi_zip_name
+
+    def get_available_files_list(self) -> list:
+        s3 = boto3.client('s3',
+                        region_name=self.s3_region,
+                        aws_access_key_id=self.aws_access_key_id,
+                        aws_secret_access_key=self.aws_secret_access_key
+                        )
+
+        available_files = []
+        try:
+            for key in s3.list_objects_v2(Bucket=self.s3_bucketname)['Contents']:
+                if (key['Key'].startswith('Finland/pks/allPollutants') and key['Key'].endswith('.zip')):
+                    available_files.append(key['Key'][12:])
+        except Exception:
+            self.log.warning('could not retreive list of objects, possibly empty bucket')
+
+        return available_files
