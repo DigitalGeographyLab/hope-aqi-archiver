@@ -1,6 +1,7 @@
 import os
 from glob import glob
 import csv
+import traceback
 from app.logger import Logger
 
 def set_env_vars(log: Logger):
@@ -10,10 +11,10 @@ def set_env_vars(log: Logger):
             k=var.split('/')[-1]
             v=open(var).read().rstrip('\n')
             os.environ[k] = v
-            log.info('read docker secret: '+ str(k), ' (len: '+ str(len(v))+')')
+            log.info('read docker secret: '+ str(k) +' (len: '+ str(len(v))+')')
             found_secrets = True
     except Exception:
-        found_secrets = False
+        traceback.print_exc()
         pass
     if (found_secrets == False):
         log.warning('no docker secrets found')

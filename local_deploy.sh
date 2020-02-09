@@ -1,1 +1,1 @@
-docker stack deploy --compose-file=docker-compose.yml hope-aqi-archiver
+docker stack deploy --compose-file=docker-compose.yml gp-stack
