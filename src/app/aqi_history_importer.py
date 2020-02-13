@@ -25,6 +25,18 @@ class AqiHistoryImporter:
         if (len(self.to_fetch) > 0):
             self.fetch_upload()
 
+    def import_local_aqi_files(self) -> None:
+        to_import = [fn for fn in os.listdir(self.aqi_dir) if ('.zip' in fn)]
+        self.log.info('uploading '+ str(len(to_import)) +' files')
+        for file_import in to_import:
+            try:
+                self.uploader.upload_file_to_allas(file_import)
+                os.remove(self.aqi_dir + file_import)
+            except Exception:
+                self.log.error('failed to upload: '+ file_import)
+                time.sleep(2)
+        self.log.info('all files uploaded')
+
     def collect_to_fetch_list(self) -> None:
         fetch_time = datetime.strptime(self.from_time, '%Y-%m-%dT%H')
         

@@ -1,6 +1,7 @@
 __pycache__/
 credentials.csv
 src/aqi_cache/*
+src/aqi_import/*
 src/aqi_archiver.log
 src/.DS_Store
 src/.env
